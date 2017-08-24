@@ -137,22 +137,22 @@ global.bruhdash = {
 
   // creates a slice of an array with n elements taken from the beginning
   take: function (array, nTake) {
-    newArray = [];
-    if (nTake){
-      for (var i=0; i<nTake; i++){
+    var newArray = [];
+    for(var i = 0; i < array.length; i++){
+      if(i < nTake){
         newArray.push(array[i]);
+      }else if(nTake === undefined){
+        newArray.push(array[0]);
+        return newArray;
+      }else if(nTake === 0){
+        return newArray;
+      }else if(nTake > array.length){
+        return array;
       }
-/*    }else if (nTake > array.length){
-      for(var j=0; j<array.length; j++){
-        newArray.push(array[j]);
-      }*/
-      
-    }else if (nTake === 0){
-      return [];
     }
-
     return newArray;
   },
+  
  /* take: function (array, takeNum) {
     var takeArr = [];
     if(takeNum === 0) { 
@@ -169,9 +169,23 @@ global.bruhdash = {
     return takeArr;
 */
   // creates a slice of an array with n elements taken from the end
-  takeRight: function () {
-
+  takeRight: function (array, nTake) {
+    var newArray = [];
+    for(var i = array.length - 1; i >= 0; i--){
+      if(i > array.length - nTake - 1){
+        newArray.unshift(array[i]);
+      }else if(nTake === undefined){
+        newArray.push(array[i]);
+        return newArray;
+      }else if(nTake === 0){
+        return newArray;
+      }else if(nTake > array.length){
+        return array;
+      }
+    }
+    return newArray;
   },
+  
 
   // fills elements of array with specified value from the start index
   // up to but not including the end index
@@ -184,14 +198,15 @@ global.bruhdash = {
 
   // removes all given values from an array
   pull: function (array, value) {
-    var pulling;
+    var newValue;
         for(var i = 0; i < value.length; i++) {
-          pulling = array.indexOf(value[i]);
-          if(pulling >= value) {
-            array.splice(pulling, 3);
+          newValue = array.indexOf(value[i]);
+          if(value >= 0) {
+            newValue.splice(value, 1);
           }
         }
     return array;
+  
   },
 
   // removes elements of an array corresponding to the given indices
@@ -204,20 +219,27 @@ global.bruhdash = {
 
   // creates an array excluding all the specified values
   without: function(array, values) {
-    var loc;
+    var local;
         for(var i = 0; i < values.length; i++) {
-          loc = array.indexOf(values[i]);
-          if(loc >= 0) {
-            array.splice(loc, 1);
+          local = array.indexOf(values[i]);
+          if(local >= 0) {
+            array.splice(local, 1);
           }
         }
     return array;
   },
 
   // returns an array with specified values excluded
-  difference: function() {
-
+  difference: function(arr1, arr2) {
+    var diffNums = [];
+    for(var i = 0; i < arr1.length; i++) {
+      if(arr2.indexOf(arr1[i]) === -1) {
+        diffNums.push(arr1[i]);
+      }
+    }
+    return diffNums;
   },
+  
 
   /*******************
    *  STRETCH GOALS! *
