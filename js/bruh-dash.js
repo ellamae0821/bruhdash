@@ -50,13 +50,14 @@ global.bruhdash = {
 },
 
 */
-/*  lastIndexOf: function (array, value) {
-  for (var i=1; i = array.length; i--){
-    if(array[i] === value){
-      return i;
+ lastIndexOf: function (array, value) {
+    for(var i = array.length; i > 0; i--) {
+      if(array[i] === value) {
+        return i;
+      }
     }
-  }return -1;
-},*/
+    return -1;
+},
 
 
   // returns an array with all elements except for the last element
