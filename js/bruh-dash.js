@@ -202,13 +202,16 @@ global.bruhdash = {
     var newValue;
         for(var i = 0; i < value.length; i++) {
           newValue = array.indexOf(value[i]);
-          if(value >= 0) {
-            newValue.splice(value, 1);
+          if(newValue >= 0) {
+            array.splice(newValue, 0);
           }
         }
     return array;
   
   },
+
+
+
 
   // removes elements of an array corresponding to the given indices
   pullAt: function (array, indices) {
