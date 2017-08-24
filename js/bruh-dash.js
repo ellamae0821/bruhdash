@@ -187,21 +187,31 @@ global.bruhdash = {
     var pulling;
         for(var i = 0; i < value.length; i++) {
           pulling = array.indexOf(value[i]);
-          if(pulling >= 0) {
-            array.splice(pulling, 2);
+          if(pulling >= value) {
+            array.splice(pulling, 3);
           }
         }
     return array;
   },
 
   // removes elements of an array corresponding to the given indices
-  pullAt: function () {
-
+  pullAt: function (array, indices) {
+    for(var i = indices.length-1; i >= 0; i--) {
+      array.splice(indices[i], 1);
+    }
+    return array;
   },
 
   // creates an array excluding all the specified values
-  without: function() {
-
+  without: function(array, values) {
+    var loc;
+        for(var i = 0; i < values.length; i++) {
+          loc = array.indexOf(values[i]);
+          if(loc >= 0) {
+            array.splice(loc, 1);
+          }
+        }
+    return array;
   },
 
   // returns an array with specified values excluded
