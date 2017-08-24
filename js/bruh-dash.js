@@ -10,55 +10,164 @@ var global = window || GLOBAL;
 global.bruhdash = {
 
   // returns the first element of an array
-  first: function () {
-      
+  first: function (array) {
+      return array[0];
   },
 
   // returns the last element of an array
-  last: function () {
-
+  last: function (array) {
+      return array[array.length-1];
   },
 
   // returns the index of the first matching element from left to right
-  indexOf: function () {
+/*  indexOf: function (array, value) {
+  var result = 0;
+  for (var i=0; i<array.length; i++){
+    if(i === value){
+      result = i - 1;
+    }else{
+      result = -1;
+    }
+  }return result;
+},*/
 
-  },
+  indexOf: function (array, value) {
+  for (var i=0; i < array.length; i++){ 
+    if(array[i] === value){
+      return i;
+    }
+  }return -1;
+},
+
 
   // returns the index of the first matching element from left to right
-  lastIndexof: function () {
+/*  lastIndexOf: function (array, value) {
+  for (var i=0; i< array.length; i--){
+    if(array [i] === value){
+      return i;
+    }
+  }return -1;
+},
 
-  },
+*/
+/*  lastIndexOf: function (array, value) {
+  for (var i=1; i = array.length; i--){
+    if(array[i] === value){
+      return i;
+    }
+  }return -1;
+},*/
+
 
   // returns an array with all elements except for the last element
-  initial: function () {
-
+  initial: function (array) {
+     array.pop();
+     return array;
   },
   
+/*    initial: function (array) {
+      newArray = newArray.initial(array);
+      return newArray;
+  },*/
   // returns an array with all falsey values removed
-  compact: function() {
+/*  compact: function(array) {
+    for (var i=0;i<array.length; i++){
+      return array.filter(Boolean);
+    }
+  },*/
 
+  compact: function(array){
+    newArray = [];
+    for (var i=0; i<array.length; i++){
+      if(array[i]){ // truthy values in array's index
+        newArray.push(array[i]);
+      }
+    }
+    return newArray;
   },
 
   // creates a slice of an array from the start index up to but not including the end index
-  slice: function () {
-
+  slice: function (array, start, end) {
+    newArray = [];
+    for (var i=start; i<end; i++){
+      newArray.push(array[i]);
+    }
+    return newArray;
   },
+
+
 
   // returns a slice of array with n elements dropped from the beignning
-  drop: function(){
+  drop: function(array, nDrop){
+    newArray = [];
+    if (nDrop){
+      for (var i=nDrop; i<array.length; i++){
+        newArray.push(array[i]);
+      }
+      return newArray;
+    }else if(nDrop=== 0){
+      return array;
+    }
+    for (var j=1; j<array.length; j++){
+      newArray.push(array[j]);
+    }
+    return newArray;    
 
   },
+
 
   // returns a slice of array with n elements dropped from the end
-  dropRight: function() {
+  dropRight: function(array, nDrop) {
+    newArray = [];
+    if (nDrop){
+      for (var i=0; i<array.length-nDrop; i++){
+        newArray.push(array[i]);
+      }
+      return newArray;
+    }else if(nDrop=== 0){
+      return array;
+    }
+    for (var j=0; j<array.length-1; j++){
+      newArray.push(array[j]);
+    }
+    return newArray;    
 
-  },
+},
+
 
   // creates a slice of an array with n elements taken from the beginning
-  take: function () {
+  take: function (array, nTake) {
+    newArray = [];
+    if (nTake){
+      for (var i=0; i<nTake; i++){
+        newArray.push(array[i]);
+      }
+/*    }else if (nTake > array.length){
+      for(var j=0; j<array.length; j++){
+        newArray.push(array[j]);
+      }*/
+      
+    }else if (nTake === 0){
+      return [];
+    }
 
+    return newArray;
   },
-
+ /* take: function (array, takeNum) {
+    var takeArr = [];
+    if(takeNum === 0) { 
+      return [];
+    } else if(takeNum > array.length) { 
+      return array;
+    } else if(takeNum) {
+      for(var i = 0; i < takeNum; i++) { 
+        takeArr.push(array[i]);
+      }
+      return takeArr;
+    }
+    takeArr.push(array[0]);
+    return takeArr;
+*/
   // creates a slice of an array with n elements taken from the end
   takeRight: function () {
 
@@ -66,13 +175,23 @@ global.bruhdash = {
 
   // fills elements of array with specified value from the start index
   // up to but not including the end index
-  fill: function() {
-
+  fill: function(array, value, start, end) {
+    if(start && end) {
+      return array.fill(value, start, end);
+    }
+    return array.fill(value);
   },
 
   // removes all given values from an array
-  pull: function () {
-
+  pull: function (array, value) {
+    var pulling;
+        for(var i = 0; i < value.length; i++) {
+          pulling = array.indexOf(value[i]);
+          if(pulling >= 0) {
+            array.splice(pulling, 2);
+          }
+        }
+    return array;
   },
 
   // removes elements of an array corresponding to the given indices
